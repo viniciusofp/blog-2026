@@ -89,7 +89,18 @@ export default async function BlogPost({ params }: BlogPostProps) {
           </>
         ) : null}
         <ChevronRight style={{ width: "16px", height: "16px" }} />
-        <p className="">{post.title}</p>
+        <p className="">
+          {post.title
+            ? post.title
+            : `${createdAt.toLocaleDateString("pt-BR", {
+                day: "numeric",
+                month: "long",
+                year: "numeric",
+              })} - ${createdAt.toLocaleTimeString("pt-BR", {
+                hour: "2-digit",
+                minute: "2-digit",
+              })}`}
+        </p>
       </div>
       <div className="mt-16">
         <p className="mb-4 text-xs tracking-widest text-stone-400 uppercase">
