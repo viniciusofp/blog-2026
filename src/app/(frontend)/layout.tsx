@@ -22,7 +22,17 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
   return (
     <html lang="en" className={geist.className}>
       <body>
-        <main>{children}</main>
+        <main className="mx-auto my-8 max-w-xl px-6 lg:max-w-2xl">
+          <BlogHeader />
+          {children}
+          <SubscribeFooter />
+          <p className="text-center text-xs text-stone-400">
+            <br />
+            Vinícius Pereira. 2026.
+            <br />
+            www.viniciusofp.com.br
+          </p>
+        </main>
       </body>
     </html>
   );

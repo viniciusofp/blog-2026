@@ -16,7 +16,7 @@ export default function PostItem({ doc }: PostItemProps) {
     data: doc.content as SerializedEditorState,
   });
   const createdAt = new Date(doc.createdAt);
-  const permalink = `/blog/${doc.slug}`;
+  const permalink = `/${doc.slug}`;
   return (
     <FadeIn>
       <div className="py-8">
@@ -80,7 +80,7 @@ export default function PostItem({ doc }: PostItemProps) {
                         : null}
                       <Link
                         className="text-teal-800 hover:underline"
-                        href={`/blog/categoria/${cat.slug}`}
+                        href={`/categoria/${cat.slug}`}
                       >
                         {cat.name}
                       </Link>
@@ -98,7 +98,7 @@ export default function PostItem({ doc }: PostItemProps) {
                     <Link
                       key={tag.id + index + doc.id}
                       className="flex h-5 items-center justify-center rounded bg-stone-200 px-2 text-[10px] tracking-widest uppercase duration-75 hover:bg-stone-800 hover:text-white"
-                      href={`/blog/tag/${tag.slug}`}
+                      href={`/tag/${tag.slug}`}
                     >
                       <span className="pr-0.5 opacity-33">#</span>
                       {tag.name}

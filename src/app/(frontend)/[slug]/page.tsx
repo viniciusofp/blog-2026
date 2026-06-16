@@ -28,8 +28,19 @@ export async function generateMetadata(
     where: { slug: { equals: slug } },
   });
   if (posts[0]) {
+    const createdAt = new Date(posts[0].createdAt);
+
     return {
-      title: `${posts[0].title} - ${blogInfo.name}`,
+      title: posts[0].title
+        ? `${posts[0].title} - ${blogInfo.name}`
+        : `${createdAt.toLocaleDateString("pt-BR", {
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+          })} - ${createdAt.toLocaleTimeString("pt-BR", {
+            hour: "2-digit",
+            minute: "2-digit",
+          })} - ${blogInfo.name}`,
     };
   }
   return {};
@@ -55,7 +66,7 @@ export default async function BlogPost({ params }: BlogPostProps) {
     <>
       <div className="mt-4 flex w-max max-w-full items-center gap-1 rounded border border-stone-200 bg-stone-100 px-3 py-1 text-xs font-medium tracking-wide [&_svg]:size-3 [&_svg]:text-stone-400">
         {" "}
-        <Link href="/blog" className="text-teal-800 hover:underline">
+        <Link href="/" className="text-teal-800 hover:underline">
           Blog
         </Link>{" "}
         {post.categories && post.categories.length > 0 ? (
@@ -67,7 +78,7 @@ export default async function BlogPost({ params }: BlogPostProps) {
                 <React.Fragment key={`postCat_${post.id}_${cat.id}`}>
                   {i > 0 ? "|" : null}
                   <Link
-                    href={`/blog/categoria/${cat.slug}`}
+                    href={`/categoria/${cat.slug}`}
                     className="text-teal-800 hover:underline"
                   >
                     {cat.name}
@@ -124,7 +135,7 @@ export default async function BlogPost({ params }: BlogPostProps) {
                     : null}
                   <Link
                     className="text-teal-800 hover:underline"
-                    href={`/blog/categoria/${cat.slug}`}
+                    href={`/categoria/${cat.slug}`}
                   >
                     {cat.name}
                   </Link>
@@ -141,7 +152,7 @@ export default async function BlogPost({ params }: BlogPostProps) {
                 <Link
                   key={"page" + tag.id + index + post.id}
                   className="flex h-5 items-center justify-center rounded bg-stone-200 px-2 text-[10px] tracking-widest uppercase duration-75 hover:bg-stone-800 hover:text-white"
-                  href={`/blog/tag/${tag.slug}`}
+                  href={`/tag/${tag.slug}`}
                 >
                   <span className="pr-0.5 opacity-33">#</span>
                   {tag.name}

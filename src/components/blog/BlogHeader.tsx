@@ -21,7 +21,7 @@ export default async function BlogHeader(props: BlogHeaderProps) {
         />
       </div>
       <div className="">
-        <Link href="/blog">
+        <Link href="/">
           <h1 className="font-bold text-stone-800">{blogInfo.name}</h1>
         </Link>
         <CustomRichText

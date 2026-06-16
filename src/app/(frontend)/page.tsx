@@ -45,7 +45,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
         <div>
           {prevPage ? (
             <Link
-              href={`/blog?page=${prevPage}`}
+              href={`/?page=${prevPage}`}
               className="flex items-center justify-start gap-1 text-teal-800 opacity-80 duration-200 hover:opacity-100"
             >
               <ArrowLeft className="size-4" />
@@ -59,7 +59,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
         <div>
           {nextPage ? (
             <Link
-              href={`/blog?page=${nextPage}`}
+              href={`/?page=${nextPage}`}
               className="flex items-center justify-end gap-1 text-teal-800 opacity-80 duration-200 hover:opacity-100"
             >
               Mais antigos <ArrowRight className="size-4" />

@@ -13,7 +13,7 @@ type DynamicContentLinkProps = {
 };
 
 export const collectionMap: any = {
-  posts: "/blog",
+  posts: "/",
   pages: "",
 };
 
