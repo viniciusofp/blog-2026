@@ -69,7 +69,7 @@ export default async function CategoryPage({
           return <PostItem key={doc.id} doc={doc as Post} />;
         })}
       </div>
-      <div className="footer my-8 grid grid-cols-3 items-center text-sm tracking-wide">
+      <div className="my-8 grid grid-cols-3 items-center text-sm tracking-wide">
         <div>
           {prevPage ? (
             <Link

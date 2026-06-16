@@ -27,7 +27,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
   const { user } = await payload.auth({ headers });
   const { docs, totalPages, nextPage, prevPage } = await payload.find({
     collection: "posts",
-    limit: 12,
+    limit: 1,
     page: page ? parseInt(page) : 1,
     pagination: true,
     sort: "-createdAt",
