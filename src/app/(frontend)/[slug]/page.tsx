@@ -64,13 +64,13 @@ export default async function BlogPost({ params }: BlogPostProps) {
   });
   comments = commentDocs;
   const createdAt = new Date(post.createdAt);
+  const updatedAt = new Date(post.updatedAt);
   return (
     <>
       <div className="mt-4 flex w-max max-w-full items-center gap-1 rounded border border-stone-200 bg-stone-100 px-3 py-1 text-xs font-medium tracking-wide [&_svg]:size-3 [&_svg]:text-stone-400">
-        {" "}
         <Link href="/" className="text-teal-800 hover:underline">
           Blog
-        </Link>{" "}
+        </Link>
         {post.categories && post.categories.length > 0 ? (
           <>
             <ChevronRight />
@@ -133,6 +133,19 @@ export default async function BlogPost({ params }: BlogPostProps) {
       <div className="prose prose-lg lg:prose-2xl prose-a:text-teal-800/80 prose-a:hover:text-teal-800 prose-a:decoration-teal-800 prose-a:hover:underline prose-a:decoration-1 prose-a:underline-offset-2 prose-a:hover:decoration-2 text-pretty">
         <CustomRichText data={post.content} />
       </div>
+      {/* {post.updatedAt !== post.createdAt ? (
+        <p className="my-2 text-xs tracking-wide text-stone-400">
+          Última atualização em:{" "}
+          {`${updatedAt.toLocaleDateString("pt-BR", {
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+          })} - ${updatedAt.toLocaleTimeString("pt-BR", {
+            hour: "2-digit",
+            minute: "2-digit",
+          })}`}
+        </p>
+      ) : null} */}
       <div className="flex flex-col gap-3">
         {post.categories && post.categories.length > 0 ? (
           <p className="text-sm text-stone-600">

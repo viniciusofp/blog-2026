@@ -15,4 +15,8 @@ export const reactToPost = async (id: string, reacts: any) => {
       reactions: reacts,
     },
   });
+  revalidatePath("/");
+  revalidatePath("/[slug]");
+  revalidatePath("/tag/[slug]");
+  revalidatePath("/categoria/[slug]");
 };
