@@ -56,29 +56,32 @@ export default function PostReactions({
   return (
     <div className="flex items-center gap-2">
       {/* {JSON.stringify(postReactions)} */}
-      <div className="flex items-center gap-1">
-        {reactions
-          .filter((r) => (post.reactions as any)[r.name] > 0)
-          .map((reaction) => (
-            <div
-              key={`${post.id}_${reaction.name}`}
-              className={cn(
-                "flex h-6 items-center gap-1 rounded-full border border-stone-100 px-1.5 text-sm text-stone-600",
-                loaded && (hasReacted as any)[post.id] === reaction.name
-                  ? "border-stone-200 bg-white shadow-sm"
-                  : "cursor-pointer hover:bg-stone-200",
-              )}
-              onClick={() => {
-                handleReact(reaction);
-              }}
-            >
-              {reaction.label}
-              <span className="text-xs">
-                {post.reactions![reaction.name as "angry"]}
-              </span>
-            </div>
-          ))}
-      </div>
+      {reactions.filter((r) => (post.reactions as any)[r.name] > 0).length >
+      0 ? (
+        <div className="flex items-center gap-1">
+          {reactions
+            .filter((r) => (post.reactions as any)[r.name] > 0)
+            .map((reaction) => (
+              <div
+                key={`${post.id}_${reaction.name}`}
+                className={cn(
+                  "flex h-6 items-center gap-1 rounded-full border border-stone-100 px-1.5 text-sm text-stone-600",
+                  loaded && (hasReacted as any)[post.id] === reaction.name
+                    ? "border-stone-200 bg-white shadow-sm"
+                    : "cursor-pointer hover:bg-stone-200",
+                )}
+                onClick={() => {
+                  handleReact(reaction);
+                }}
+              >
+                {reaction.label}
+                <span className="text-xs">
+                  {post.reactions![reaction.name as "angry"]}
+                </span>
+              </div>
+            ))}
+        </div>
+      ) : null}
       <Popover>
         <PopoverTrigger asChild>
           <div className="flex size-6 cursor-pointer items-center justify-center rounded-full border border-stone-100 duration-75 hover:bg-stone-200">

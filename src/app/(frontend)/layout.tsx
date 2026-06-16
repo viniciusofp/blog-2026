@@ -4,6 +4,7 @@ import { Hanken_Grotesk } from "next/font/google";
 import BlogHeader from "@/components/blog/BlogHeader";
 import SubscribeFooter from "@/components/blog/SubscribeFooter";
 import Link from "next/link";
+import Footer from "@/components/Footer";
 
 export const metadata = {
   description: "A blank template using Payload in a Next.js app.",
@@ -26,27 +27,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
           <BlogHeader />
           {children}
           <SubscribeFooter />
-          <h2 className="my-4 text-center text-2xl text-pretty text-stone-800">
-            Também gostaria de ter o seu espaço na internet fora dos domínios de
-            Elon Musk e Mark Zuckenberg?{" "}
-            <Link
-              href="https://www.viniciusofp.com.br"
-              className="font-medium text-stone-800 hover:underline"
-            >
-              Fala comigo!
-            </Link>
-          </h2>
-          <p className="text-center text-xs text-stone-400">
-            <br />
-            Vinícius Pereira. 2026.
-            <br />
-            <Link
-              href="https://www.viniciusofp.com.br"
-              className="font-medium text-stone-800 hover:underline"
-            >
-              www.viniciusofp.com.br
-            </Link>
-          </p>
+          <Footer />
         </main>
       </body>
     </html>

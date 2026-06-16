@@ -110,7 +110,7 @@ export default function PostItem({ doc }: PostItemProps) {
           </div>
         ) : null}
         {doc.reactions ? (
-          <div className="-mt-2 mb-4">
+          <div className="-mt-4 mb-4">
             <PostReactions post={doc} postReactions={doc.reactions} />
           </div>
         ) : null}

@@ -1,16 +1,14 @@
 import Link from "next/link";
 import { getPayload } from "payload";
-
 import config from "@/payload.config";
 import { CustomRichText } from "@/components/CustomRichText";
 import me from "@/public/me.jpg";
 
-const payloadConfig = await config;
-const payload = await getPayload({ config: payloadConfig });
-
 export type BlogHeaderProps = {};
 
 export default async function BlogHeader(props: BlogHeaderProps) {
+  const payloadConfig = await config;
+  const payload = await getPayload({ config: payloadConfig });
   const blogInfo = await payload.findGlobal({ slug: "blogInfo" });
 
   return (
