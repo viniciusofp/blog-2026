@@ -1,0 +1,42 @@
+export const reactions = [
+  {
+    name: "angry",
+    label: "😠",
+    type: "number",
+    min: 0,
+    defaultValue: 0,
+    admin: { step: 1 },
+  },
+  {
+    name: "heart",
+    label: "❤️",
+    type: "number",
+    min: 0,
+    defaultValue: 0,
+    admin: { step: 1 },
+  },
+  {
+    name: "wow",
+    label: "😮",
+    type: "number",
+    min: 0,
+    defaultValue: 0,
+    admin: { step: 1 },
+  },
+  {
+    name: "sad",
+    label: "😢",
+    type: "number",
+    min: 0,
+    defaultValue: 0,
+    admin: { step: 1 },
+  },
+  {
+    name: "lol",
+    label: "😂",
+    type: "number",
+    min: 0,
+    defaultValue: 0,
+    admin: { step: 1 },
+  },
+];

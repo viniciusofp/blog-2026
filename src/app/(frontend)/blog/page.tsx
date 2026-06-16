@@ -1,0 +1,72 @@
+import { headers as getHeaders } from "next/headers.js";
+import { getPayload } from "payload";
+
+import PostItem from "@/components/blog/PostItem";
+import config from "@/payload.config";
+import { ArrowLeft, ArrowRight } from "lucide-react";
+import Link from "next/link";
+import { Post } from "@/payload-types";
+import { Metadata } from "next";
+
+const payloadConfig = await config;
+const payload = await getPayload({ config: payloadConfig });
+export type BlogPageProps = {
+  searchParams: Promise<{ page: string }>;
+};
+
+export async function generateMetadata(): Promise<Metadata> {
+  const blogInfo = await payload.findGlobal({ slug: "blogInfo" });
+
+  return {
+    title: `${blogInfo.name}`,
+  };
+}
+export default async function BlogPage({ searchParams }: BlogPageProps) {
+  const { page } = await searchParams;
+  const headers = await getHeaders();
+  const { user } = await payload.auth({ headers });
+  const { docs, totalPages, nextPage, prevPage } = await payload.find({
+    collection: "posts",
+    limit: 12,
+    page: page ? parseInt(page) : 1,
+    pagination: true,
+    sort: "-createdAt",
+    depth: 2,
+  });
+
+  return (
+    <>
+      <div className="flex flex-col divide-y divide-stone-200">
+        {docs.map((doc) => {
+          return <PostItem key={doc.id} doc={doc as Post} />;
+        })}
+      </div>
+      <div className="footer my-8 grid grid-cols-3 items-center text-sm tracking-wide">
+        <div>
+          {prevPage ? (
+            <Link
+              href={`/blog?page=${prevPage}`}
+              className="flex items-center justify-start gap-1 text-teal-800 opacity-80 duration-200 hover:opacity-100"
+            >
+              <ArrowLeft className="size-4" />
+              Mais novos
+            </Link>
+          ) : null}
+        </div>
+        <div className="flex items-center justify-center text-stone-400 uppercase">
+          {page ? page : 1}/{totalPages}
+        </div>
+        <div>
+          {nextPage ? (
+            <Link
+              href={`/blog?page=${nextPage}`}
+              className="flex items-center justify-end gap-1 text-teal-800 opacity-80 duration-200 hover:opacity-100"
+            >
+              Mais antigos <ArrowRight className="size-4" />
+            </Link>
+          ) : null}
+        </div>
+      </div>
+    </>
+  );
+}
