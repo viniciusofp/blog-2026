@@ -1,20 +1,20 @@
 import { headers as getHeaders } from "next/headers.js";
 import { getPayload } from "payload";
+import config from "@/payload.config";
 
 import PostItem from "@/components/blog/PostItem";
-import config from "@/payload.config";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { Post } from "@/payload-types";
 import { Metadata } from "next";
 
-const payloadConfig = await config;
-const payload = await getPayload({ config: payloadConfig });
 export type BlogPageProps = {
   searchParams: Promise<{ page: string }>;
 };
 
 export async function generateMetadata(): Promise<Metadata> {
+  const payloadConfig = await config;
+  const payload = await getPayload({ config: payloadConfig });
   const blogInfo = await payload.findGlobal({ slug: "blogInfo" });
 
   return {
@@ -22,6 +22,8 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 export default async function BlogPage({ searchParams }: BlogPageProps) {
+  const payloadConfig = await config;
+  const payload = await getPayload({ config: payloadConfig });
   const { page } = await searchParams;
   const headers = await getHeaders();
   const { user } = await payload.auth({ headers });

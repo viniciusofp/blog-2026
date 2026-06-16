@@ -1,15 +1,13 @@
 import { headers as getHeaders } from "next/headers.js";
 import { getPayload } from "payload";
+import config from "@/payload.config";
 
 import PostItem from "@/components/blog/PostItem";
-import config from "@/payload.config";
 import { ArrowLeft, ArrowRight, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { Post, Tag } from "@/payload-types";
 import { ResolvingMetadata, Metadata } from "next";
 
-const payloadConfig = await config;
-const payload = await getPayload({ config: payloadConfig });
 export type TagPageProps = {
   searchParams: Promise<{ page: string }>;
   params: Promise<{ slug: string }>;
@@ -18,6 +16,8 @@ export async function generateMetadata(
   { params, searchParams }: TagPageProps,
   parent: ResolvingMetadata,
 ): Promise<Metadata> {
+  const payloadConfig = await config;
+  const payload = await getPayload({ config: payloadConfig });
   const blogInfo = await payload.findGlobal({ slug: "blogInfo" });
   const slug = (await params).slug;
 
@@ -35,6 +35,8 @@ export async function generateMetadata(
 }
 
 export default async function TagPage({ searchParams, params }: TagPageProps) {
+  const payloadConfig = await config;
+  const payload = await getPayload({ config: payloadConfig });
   const { page } = await searchParams;
   const { slug } = await params;
   const headers = await getHeaders();

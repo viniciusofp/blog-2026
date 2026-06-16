@@ -30,7 +30,12 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
             <br />
             Vinícius Pereira. 2026.
             <br />
-            www.viniciusofp.com.br
+            <Link
+              href="https://www.viniciusofp.com.br"
+              className="font-medium text-stone-800 hover:underline"
+            >
+              www.viniciusofp.com.br
+            </Link>
           </p>
         </main>
       </body>

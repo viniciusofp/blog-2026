@@ -11,14 +11,14 @@ import React from "react";
 import PostReactions from "@/components/blog/PostReactions";
 import ExpandableComments from "@/components/blog/ExpandableComments";
 
-const payloadConfig = await config;
-const payload = await getPayload({ config: payloadConfig });
 export type BlogPostProps = { params: Promise<{ slug: string }> };
 
 export async function generateMetadata(
   { params }: BlogPostProps,
   parent: ResolvingMetadata,
 ): Promise<Metadata> {
+  const payloadConfig = await config;
+  const payload = await getPayload({ config: payloadConfig });
   const blogInfo = await payload.findGlobal({ slug: "blogInfo" });
   const slug = (await params).slug;
 
@@ -46,6 +46,8 @@ export async function generateMetadata(
   return {};
 }
 export default async function BlogPost({ params }: BlogPostProps) {
+  const payloadConfig = await config;
+  const payload = await getPayload({ config: payloadConfig });
   const { slug } = await params;
   const { docs } = await payload.find({
     collection: "posts",

@@ -8,8 +8,6 @@ import Link from "next/link";
 import { Post, Tag } from "@/payload-types";
 import { ResolvingMetadata, Metadata } from "next";
 
-const payloadConfig = await config;
-const payload = await getPayload({ config: payloadConfig });
 export type CategoryPageProps = {
   searchParams: Promise<{ page: string }>;
   params: Promise<{ slug: string }>;
@@ -18,6 +16,8 @@ export async function generateMetadata(
   { params, searchParams }: CategoryPageProps,
   parent: ResolvingMetadata,
 ): Promise<Metadata> {
+  const payloadConfig = await config;
+  const payload = await getPayload({ config: payloadConfig });
   const blogInfo = await payload.findGlobal({ slug: "blogInfo" });
   const slug = (await params).slug;
 
@@ -38,6 +38,8 @@ export default async function CategoryPage({
   searchParams,
   params,
 }: CategoryPageProps) {
+  const payloadConfig = await config;
+  const payload = await getPayload({ config: payloadConfig });
   const { page } = await searchParams;
   const { slug } = await params;
   const headers = await getHeaders();
