@@ -14,6 +14,7 @@ import { Users } from "./collections/Users";
 import { Categories } from "./collections/Categories";
 import { BlogInfo } from "./collections/BlogInfo";
 import { Subscribers } from "./collections/Subscribers";
+import { PostReactions } from "./collections/PostReactions";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -33,9 +34,18 @@ export default buildConfig({
             prefillOnly: true,
           }
         : false,
+    timezones: { defaultTimezone: "America/Sao_Paulo" },
   },
   globals: [BlogInfo],
-  collections: [Posts, Categories, Tags, Comments, Subscribers, Users],
+  collections: [
+    Posts,
+    Categories,
+    Tags,
+    PostReactions,
+    Comments,
+    Subscribers,
+    Users,
+  ],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || "",
   typescript: {

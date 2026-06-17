@@ -5,6 +5,7 @@ import BlogHeader from "@/components/blog/BlogHeader";
 import SubscribeFooter from "@/components/blog/SubscribeFooter";
 import Link from "next/link";
 import Footer from "@/components/Footer";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 export const metadata = {
   description: "A blank template using Payload in a Next.js app.",
@@ -23,12 +24,15 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
   return (
     <html lang="en" className={geist.className}>
       <body>
-        <main className="mx-auto my-8 max-w-xl px-6 lg:max-w-2xl">
-          <BlogHeader />
-          {children}
-          <SubscribeFooter />
-          <Footer />
-        </main>
+        <TooltipProvider>
+          {" "}
+          <main className="mx-auto my-8 max-w-xl px-6 lg:max-w-2xl">
+            <BlogHeader />
+            {children}
+            <SubscribeFooter />
+            <Footer />
+          </main>
+        </TooltipProvider>
       </body>
     </html>
   );

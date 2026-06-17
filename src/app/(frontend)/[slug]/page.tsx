@@ -2,7 +2,7 @@ import { getPayload } from "payload";
 
 import CommentForm from "@/components/blog/CommentForm";
 import { CustomRichText } from "@/components/CustomRichText";
-import { Category, Comment, Tag } from "@/payload-types";
+import { Category, Comment, PostReaction, Tag } from "@/payload-types";
 import config from "@/payload.config";
 import Link from "next/link";
 import { ResolvingMetadata, Metadata } from "next";
@@ -133,7 +133,7 @@ export default async function BlogPost({ params }: BlogPostProps) {
       <div className="prose prose-lg lg:prose-2xl prose-a:text-teal-800/80 prose-a:hover:text-teal-800 prose-a:decoration-teal-800 prose-a:hover:underline prose-a:decoration-1 prose-a:underline-offset-2 prose-a:hover:decoration-2 text-pretty">
         <CustomRichText data={post.content} />
       </div>
-      {/* {post.updatedAt !== post.createdAt ? (
+      {post.updatedAt !== post.createdAt ? (
         <p className="my-2 text-xs tracking-wide text-stone-400">
           Última atualização em:{" "}
           {`${updatedAt.toLocaleDateString("pt-BR", {
@@ -145,7 +145,7 @@ export default async function BlogPost({ params }: BlogPostProps) {
             minute: "2-digit",
           })}`}
         </p>
-      ) : null} */}
+      ) : null}
       <div className="flex flex-col gap-3">
         {post.categories && post.categories.length > 0 ? (
           <p className="text-sm text-stone-600">
@@ -189,7 +189,7 @@ export default async function BlogPost({ params }: BlogPostProps) {
         ) : null}
       </div>
       <div className="mt-4">
-        <PostReactions post={post} postReactions={post.reactions} />
+        <PostReactions post={post} />
       </div>
       {comments && comments.length > 0 ? (
         <ExpandableComments comments={comments} />

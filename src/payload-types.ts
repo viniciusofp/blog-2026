@@ -70,6 +70,7 @@ export interface Config {
     posts: Post;
     categories: Category;
     tags: Tag;
+    'post-reactions': PostReaction;
     comments: Comment;
     subscribers: Subscriber;
     users: User;
@@ -81,12 +82,14 @@ export interface Config {
   collectionsJoins: {
     posts: {
       comments: 'comments';
+      reactions: 'post-reactions';
     };
   };
   collectionsSelect: {
     posts: PostsSelect<false> | PostsSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     tags: TagsSelect<false> | TagsSelect<true>;
+    'post-reactions': PostReactionsSelect<false> | PostReactionsSelect<true>;
     comments: CommentsSelect<false> | CommentsSelect<true>;
     subscribers: SubscribersSelect<false> | SubscribersSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
@@ -164,16 +167,10 @@ export interface Post {
   commentCount?: number | null;
   categories?: (string | Category)[] | null;
   tags?: (string | Tag)[] | null;
-  votes?: {
-    up?: number | null;
-    down?: number | null;
-  };
   reactions?: {
-    angry?: number | null;
-    heart?: number | null;
-    wow?: number | null;
-    sad?: number | null;
-    lol?: number | null;
+    docs?: (string | PostReaction)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
   };
   updatedAt: string;
   createdAt: string;
@@ -218,6 +215,27 @@ export interface Tag {
   id: string;
   name: string;
   slug: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "post-reactions".
+ */
+export interface PostReaction {
+  id: string;
+  post?: (string | null) | Post;
+  votes?: {
+    up?: number | null;
+    down?: number | null;
+  };
+  reactions?: {
+    angry?: number | null;
+    heart?: number | null;
+    wow?: number | null;
+    sad?: number | null;
+    lol?: number | null;
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -302,6 +320,10 @@ export interface PayloadLockedDocument {
         value: string | Tag;
       } | null)
     | ({
+        relationTo: 'post-reactions';
+        value: string | PostReaction;
+      } | null)
+    | ({
         relationTo: 'comments';
         value: string | Comment;
       } | null)
@@ -367,21 +389,7 @@ export interface PostsSelect<T extends boolean = true> {
   commentCount?: T;
   categories?: T;
   tags?: T;
-  votes?:
-    | T
-    | {
-        up?: T;
-        down?: T;
-      };
-  reactions?:
-    | T
-    | {
-        angry?: T;
-        heart?: T;
-        wow?: T;
-        sad?: T;
-        lol?: T;
-      };
+  reactions?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -403,6 +411,30 @@ export interface CategoriesSelect<T extends boolean = true> {
 export interface TagsSelect<T extends boolean = true> {
   name?: T;
   slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "post-reactions_select".
+ */
+export interface PostReactionsSelect<T extends boolean = true> {
+  post?: T;
+  votes?:
+    | T
+    | {
+        up?: T;
+        down?: T;
+      };
+  reactions?:
+    | T
+    | {
+        angry?: T;
+        heart?: T;
+        wow?: T;
+        sad?: T;
+        lol?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }
