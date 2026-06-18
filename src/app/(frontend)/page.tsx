@@ -1,3 +1,5 @@
+import { headers as getHeaders } from "next/headers";
+
 import { getPayload } from "payload";
 import config from "@/payload.config";
 
@@ -8,7 +10,7 @@ import { Post } from "@/payload-types";
 import { Metadata } from "next";
 
 export type BlogPageProps = {
-  searchParams: Promise<{ page: string }>;
+  searchParams: Promise<{ page: string; preview: string }>;
 };
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -18,12 +20,17 @@ export async function generateMetadata(): Promise<Metadata> {
 
   return {
     title: `${blogInfo.name}`,
+    description: `${blogInfo.description}`,
   };
 }
 export default async function BlogPage({ searchParams }: BlogPageProps) {
   const payloadConfig = await config;
   const payload = await getPayload({ config: payloadConfig });
-  const { page } = await searchParams;
+
+  const headers = await getHeaders();
+  const { user } = await payload.auth({ headers });
+
+  const { page, preview } = await searchParams;
   const { docs, totalPages, nextPage, prevPage } = await payload.find({
     collection: "posts",
     limit: 12,
@@ -31,6 +38,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
     pagination: true,
     sort: "-createdAt",
     depth: 2,
+    draft: user && Boolean(preview) ? true : false,
   });
 
   return (

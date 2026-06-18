@@ -18,7 +18,6 @@ import { RefreshRouteOnSave } from "@/components/RefreshRouteOnSave";
 
 export type BlogPostProps = {
   params: Promise<{ slug: string }>;
-
   searchParams: Promise<{ preview: string }>;
 };
 

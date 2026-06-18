@@ -9,7 +9,7 @@ import { Post, Tag } from "@/payload-types";
 import { ResolvingMetadata, Metadata } from "next";
 
 export type TagPageProps = {
-  searchParams: Promise<{ page: string }>;
+  searchParams: Promise<{ page: string; preview: string }>;
   params: Promise<{ slug: string }>;
 };
 export async function generateMetadata(
@@ -37,7 +37,7 @@ export async function generateMetadata(
 export default async function TagPage({ searchParams, params }: TagPageProps) {
   const payloadConfig = await config;
   const payload = await getPayload({ config: payloadConfig });
-  const { page } = await searchParams;
+  const { page, preview } = await searchParams;
   const { slug } = await params;
   const headers = await getHeaders();
   const { user } = await payload.auth({ headers });
@@ -49,6 +49,7 @@ export default async function TagPage({ searchParams, params }: TagPageProps) {
     pagination: true,
     sort: "-createdAt",
     depth: 2,
+    draft: user && Boolean(preview) ? true : false,
   });
 
   const tag = docs[0].tags?.filter((t) => (t as Tag).slug === slug)[0];

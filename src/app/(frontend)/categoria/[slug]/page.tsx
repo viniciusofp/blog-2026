@@ -9,7 +9,7 @@ import { Post, Tag } from "@/payload-types";
 import { ResolvingMetadata, Metadata } from "next";
 
 export type CategoryPageProps = {
-  searchParams: Promise<{ page: string }>;
+  searchParams: Promise<{ page: string; preview: string }>;
   params: Promise<{ slug: string }>;
 };
 export async function generateMetadata(
@@ -40,7 +40,7 @@ export default async function CategoryPage({
 }: CategoryPageProps) {
   const payloadConfig = await config;
   const payload = await getPayload({ config: payloadConfig });
-  const { page } = await searchParams;
+  const { page, preview } = await searchParams;
   const { slug } = await params;
   const headers = await getHeaders();
   const { user } = await payload.auth({ headers });
@@ -52,6 +52,7 @@ export default async function CategoryPage({
     pagination: true,
     sort: "-createdAt",
     depth: 2,
+    draft: user && Boolean(preview) ? true : false,
   });
 
   const category = docs[0].categories?.filter(
