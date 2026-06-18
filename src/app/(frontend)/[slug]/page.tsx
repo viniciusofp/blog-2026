@@ -10,15 +10,26 @@ import { ChevronRight } from "lucide-react";
 import React from "react";
 import PostReactions from "@/components/blog/PostReactions";
 import ExpandableComments from "@/components/blog/ExpandableComments";
+import { headers as getHeaders } from "next/headers";
+import PreviewAlert from "@/components/blog/PreviewAlert";
+import { convertLexicalToPlaintext } from "@payloadcms/richtext-lexical/plaintext";
+import { SerializedEditorState } from "@payloadcms/richtext-lexical/lexical";
+import { RefreshRouteOnSave } from "@/components/RefreshRouteOnSave";
 
-export type BlogPostProps = { params: Promise<{ slug: string }> };
+export type BlogPostProps = {
+  params: Promise<{ slug: string }>;
+
+  searchParams: Promise<{ preview: string }>;
+};
 
 export async function generateMetadata(
-  { params }: BlogPostProps,
+  { params, searchParams }: BlogPostProps,
   parent: ResolvingMetadata,
 ): Promise<Metadata> {
   const payloadConfig = await config;
   const payload = await getPayload({ config: payloadConfig });
+
+  const { preview } = await searchParams;
   const blogInfo = await payload.findGlobal({ slug: "blogInfo" });
   const slug = (await params).slug;
 
@@ -27,32 +38,49 @@ export async function generateMetadata(
     collection: "posts",
     where: { slug: { equals: slug } },
   });
-  if (posts[0]) {
-    const createdAt = new Date(posts[0].createdAt);
+  const post = posts[0];
+  if (post) {
+    const createdAt = new Date(post.createdAt);
+    const plaintext = convertLexicalToPlaintext({
+      data: post.content as SerializedEditorState,
+    }).replaceAll("&nbsp;", " ");
 
     return {
-      title: posts[0].title
-        ? `${posts[0].title} - ${blogInfo.name}`
-        : `${createdAt.toLocaleDateString("pt-BR", {
-            day: "numeric",
-            month: "long",
-            year: "numeric",
-          })} - ${createdAt.toLocaleTimeString("pt-BR", {
-            hour: "2-digit",
-            minute: "2-digit",
-          })} - ${blogInfo.name}`,
+      title: `${preview ? "PREVIEW: " : ""}${
+        post.title
+          ? `${post.title} - ${blogInfo.name}`
+          : `${createdAt.toLocaleDateString("pt-BR", {
+              day: "numeric",
+              month: "long",
+              year: "numeric",
+            })} - ${createdAt.toLocaleTimeString("pt-BR", {
+              hour: "2-digit",
+              minute: "2-digit",
+            })} - ${blogInfo.name}`
+      }`,
+      description:
+        plaintext.length > 160 ? `${plaintext.slice(0, 154)} (...)` : plaintext,
     };
   }
   return {};
 }
-export default async function BlogPost({ params }: BlogPostProps) {
+export default async function BlogPost({
+  params,
+  searchParams,
+}: BlogPostProps) {
   const payloadConfig = await config;
   const payload = await getPayload({ config: payloadConfig });
   const { slug } = await params;
+
+  const headers = await getHeaders();
+  const { user } = await payload.auth({ headers });
+  const { preview } = await searchParams;
+
   const { docs } = await payload.find({
     collection: "posts",
     where: { slug: { equals: slug } },
     depth: 1,
+    draft: user && Boolean(preview) ? true : false,
   });
   if (!docs[0]) return null;
   const post = docs[0];
@@ -67,8 +95,10 @@ export default async function BlogPost({ params }: BlogPostProps) {
   const updatedAt = new Date(post.updatedAt);
   return (
     <>
+      <RefreshRouteOnSave />
+      {preview ? <PreviewAlert /> : null}
       <div className="mt-4 flex w-max max-w-full items-center gap-1 rounded border border-stone-200 bg-stone-100 px-3 py-1 text-xs font-medium tracking-wide [&_svg]:size-3 [&_svg]:text-stone-400">
-        <Link href="/" className="text-teal-800 hover:underline">
+        <Link href="/" className="text-orange-800 hover:underline">
           Blog
         </Link>
         {post.categories && post.categories.length > 0 ? (
@@ -81,7 +111,7 @@ export default async function BlogPost({ params }: BlogPostProps) {
                   {i > 0 ? "|" : null}
                   <Link
                     href={`/categoria/${cat.slug}`}
-                    className="text-teal-800 hover:underline"
+                    className="text-orange-800 hover:underline"
                   >
                     {cat.name}
                   </Link>
@@ -125,13 +155,16 @@ export default async function BlogPost({ params }: BlogPostProps) {
           ) : null}
         </p>
         {post.title ? (
-          <h1 className="mb-8 text-3xl leading-tight font-bold text-pretty lg:text-4xl">
+          <h1 className="mb-8 text-4xl leading-none font-bold text-pretty lg:text-5xl">
             {post.title}
           </h1>
         ) : null}
       </div>
-      <div className="prose prose-lg lg:prose-2xl prose-a:text-teal-800/80 prose-a:hover:text-teal-800 prose-a:decoration-teal-800 prose-a:hover:underline prose-a:decoration-1 prose-a:underline-offset-2 prose-a:hover:decoration-2 text-pretty">
-        <CustomRichText data={post.content} />
+      <div className="">
+        <CustomRichText
+          data={post.content}
+          className="prose-headings:font-bold prose-h1:text-4xl prose-h2:text-3xl prose-h3:text-2xl prose-h4:text-xl lg:prose-h1:text-5xl lg:prose-h2:text-4xl lg:prose-h3:text-3xl lg:prose-h4:text-2xl prose prose-lg lg:prose-2xl prose-a:text-orange-800/80 prose-a:hover:text-orange-800 prose-a:decoration-orange-800 prose-a:hover:underline prose-a:decoration-1 prose-a:underline-offset-2 prose-a:hover:decoration-2 text-pretty"
+        />
       </div>
       {post.updatedAt !== post.createdAt ? (
         <p className="my-2 text-xs tracking-wide text-stone-400">
@@ -160,7 +193,7 @@ export default async function BlogPost({ params }: BlogPostProps) {
                       : ", "
                     : null}
                   <Link
-                    className="text-teal-800 hover:underline"
+                    className="text-orange-800 hover:underline"
                     href={`/categoria/${cat.slug}`}
                   >
                     {cat.name}

@@ -14,11 +14,26 @@ export const Posts: CollectionConfig = {
   slug: "posts",
   admin: {
     useAsTitle: "content",
+    components: {
+      edit: {
+        beforeDocumentControls: [
+          "@/components/payload/ui/BeforeControls#VisitContent",
+        ],
+      },
+    },
+    livePreview: {
+      url: ({ data, collectionConfig, req }) =>
+        `${req.protocol}//${req.host}/${data.slug}?preview=true`,
+    },
   },
   defaultPopulate: { comments: true, slug: true },
   labels: { singular: "Post", plural: "Posts" },
   versions: {
-    drafts: true,
+    drafts: {
+      autosave: {
+        interval: 1000,
+      },
+    },
     maxPerDoc: 10,
   },
   fields: [
@@ -76,7 +91,7 @@ export const Posts: CollectionConfig = {
       type: "ui", // required
       admin: {
         components: {
-          Field: "@/components/payload/CharCounter",
+          Field: "@/components/payload/ui/CharCounter",
         },
       },
     },
@@ -112,6 +127,7 @@ export const Posts: CollectionConfig = {
         ],
       },
       required: true,
+      unique: true,
     },
 
     {

@@ -13,7 +13,7 @@ export default async function Footer(props: FooterProps) {
   return (
     <div>
       <CustomRichText
-        className="mx-auto my-4 max-w-prose text-center text-lg text-pretty text-stone-800 [&_a]:font-medium [&_a]:text-teal-800 [&_a]:hover:underline"
+        className="mx-auto my-4 max-w-prose text-center text-lg text-pretty text-stone-800 [&_a]:font-medium [&_a]:text-orange-800 [&_a]:hover:underline"
         data={blogInfo.footerMessage}
       />
 

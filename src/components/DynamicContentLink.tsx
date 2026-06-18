@@ -10,24 +10,25 @@ type DynamicContentLinkProps = {
   className?: string;
   onClick?: any;
   target?: any;
+  suffix?: string;
 };
 
 export const collectionMap: any = {
-  posts: "/",
+  posts: "",
   pages: "",
 };
 
 export function DynamicContentLink(props: DynamicContentLinkProps) {
-  const { slug, collection, children, href } = props;
+  const { slug, collection, children, href, suffix = "" } = props;
 
   return (
     <Link
       {...props}
-      href={
+      href={`${
         href ||
         `${collectionMap[collection]}/${slug}` ||
         `/${collection}/${slug}`
-      }
+      }${suffix}`}
     >
       {children}
     </Link>

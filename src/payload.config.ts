@@ -35,6 +35,16 @@ export default buildConfig({
           }
         : false,
     timezones: { defaultTimezone: "America/Sao_Paulo" },
+    livePreview: {
+      breakpoints: [
+        {
+          name: "mobile",
+          height: 667,
+          label: "Mobile",
+          width: 375,
+        },
+      ],
+    },
   },
   globals: [BlogInfo],
   collections: [

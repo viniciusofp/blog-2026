@@ -1,4 +1,3 @@
-import { headers as getHeaders } from "next/headers.js";
 import { getPayload } from "payload";
 import config from "@/payload.config";
 
@@ -25,8 +24,6 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
   const payloadConfig = await config;
   const payload = await getPayload({ config: payloadConfig });
   const { page } = await searchParams;
-  const headers = await getHeaders();
-  const { user } = await payload.auth({ headers });
   const { docs, totalPages, nextPage, prevPage } = await payload.find({
     collection: "posts",
     limit: 12,
@@ -48,7 +45,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
           {prevPage ? (
             <Link
               href={`/?page=${prevPage}`}
-              className="flex items-center justify-start gap-1 text-teal-800 opacity-80 duration-200 hover:opacity-100"
+              className="flex items-center justify-start gap-1 text-orange-800 opacity-80 duration-200 hover:opacity-100"
             >
               <ArrowLeft className="size-4" />
               Mais novos
@@ -62,7 +59,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
           {nextPage ? (
             <Link
               href={`/?page=${nextPage}`}
-              className="flex items-center justify-end gap-1 text-teal-800 opacity-80 duration-200 hover:opacity-100"
+              className="flex items-center justify-end gap-1 text-orange-800 opacity-80 duration-200 hover:opacity-100"
             >
               Mais antigos <ArrowRight className="size-4" />
             </Link>
