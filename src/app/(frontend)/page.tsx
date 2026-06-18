@@ -34,6 +34,18 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
   const { docs, totalPages, nextPage, prevPage } = await payload.find({
     collection: "posts",
     limit: 12,
+    where: {
+      or: [
+        {
+          _status: { equals: user && Boolean(preview) ? "draft" : "published" },
+        },
+        {
+          _status: {
+            equals: user && Boolean(preview) ? "published" : "published",
+          },
+        },
+      ],
+    },
     page: page ? parseInt(page) : 1,
     pagination: true,
     sort: "-createdAt",

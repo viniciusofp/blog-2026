@@ -77,12 +77,27 @@ export default async function BlogPost({
 
   const { docs } = await payload.find({
     collection: "posts",
-    where: { slug: { equals: slug } },
+    where: {
+      slug: { equals: slug },
+      _status: { equals: user && Boolean(preview) ? "draft" : "published" },
+    },
     depth: 1,
     draft: user && Boolean(preview) ? true : false,
   });
-  if (!docs[0]) return null;
   const post = docs[0];
+
+  if (!post)
+    return (
+      <div className="my-8">
+        <p>
+          Publicação não encontrada.
+          <br />
+          <Link href="/" className="font-medium hover:underline">
+            Voltar pra casa.
+          </Link>
+        </p>
+      </div>
+    );
   let comments: Comment[] | false = false;
   const { docs: commentDocs } = await payload.find({
     collection: "comments",

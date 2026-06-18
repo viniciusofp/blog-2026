@@ -48,7 +48,25 @@ export default async function CategoryPage({
     collection: "posts",
     limit: 12,
     page: page ? parseInt(page) : 1,
-    where: { "categories.slug": { equals: slug } },
+    where: {
+      and: [
+        {
+          or: [
+            {
+              _status: {
+                equals: user && Boolean(preview) ? "draft" : "published",
+              },
+            },
+            {
+              _status: {
+                equals: user && Boolean(preview) ? "published" : "published",
+              },
+            },
+          ],
+        },
+        { "categories.slug": { equals: slug } },
+      ],
+    },
     pagination: true,
     sort: "-createdAt",
     depth: 2,

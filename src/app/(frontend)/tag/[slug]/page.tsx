@@ -45,7 +45,25 @@ export default async function TagPage({ searchParams, params }: TagPageProps) {
     collection: "posts",
     limit: 12,
     page: page ? parseInt(page) : 1,
-    where: { "tags.slug": { equals: slug } },
+    where: {
+      and: [
+        {
+          or: [
+            {
+              _status: {
+                equals: user && Boolean(preview) ? "draft" : "published",
+              },
+            },
+            {
+              _status: {
+                equals: user && Boolean(preview) ? "published" : "published",
+              },
+            },
+          ],
+        },
+        { "tags.slug": { equals: slug } },
+      ],
+    },
     pagination: true,
     sort: "-createdAt",
     depth: 2,
