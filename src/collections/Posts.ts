@@ -62,11 +62,32 @@ export const Posts: CollectionConfig = {
             blocks: [
               {
                 slug: "videoEmbed",
+                labels: { singular: "Vídeo", plural: "Vídeos" },
                 fields: [urlField],
               },
               {
                 slug: "code",
+                labels: {
+                  singular: "Código (Embed)",
+                  plural: "Códigos (Embed)",
+                },
                 fields: [{ name: "code", type: "code", label: "Código" }],
+              },
+              {
+                slug: "imageGallery",
+                labels: {
+                  singular: "Galeria de Imagem",
+                  plural: "Galerias de Imagem",
+                },
+                fields: [
+                  {
+                    name: "images",
+                    type: "upload",
+                    label: "Imagem",
+                    relationTo: "media",
+                    hasMany: true,
+                  },
+                ],
               },
             ],
           }),
