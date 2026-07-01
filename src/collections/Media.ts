@@ -10,17 +10,18 @@ export const Media: CollectionConfig = {
     imageSizes: [
       {
         name: "thumbnail",
-        width: 400,
+        width: 320,
+        height: 320,
         position: "centre",
       },
       {
         name: "third",
-        width: 640,
+        width: 400,
         position: "centre",
       },
       {
         name: "half",
-        width: 960,
+        width: 640,
         position: "centre",
       },
       {

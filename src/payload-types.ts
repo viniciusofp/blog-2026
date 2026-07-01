@@ -309,6 +309,7 @@ export interface Subscriber {
   id: string;
   name?: string | null;
   email: string;
+  emailConfirmation?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -592,6 +593,7 @@ export interface CommentsSelect<T extends boolean = true> {
 export interface SubscribersSelect<T extends boolean = true> {
   name?: T;
   email?: T;
+  emailConfirmation?: T;
   updatedAt?: T;
   createdAt?: T;
 }

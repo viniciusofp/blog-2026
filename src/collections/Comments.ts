@@ -16,13 +16,14 @@ export const Comments: CollectionConfig = {
         { name: "name", label: "Nome", type: "text", required: true },
         { name: "email", label: "E-mail", type: "email", required: true },
       ],
+      admin: { readOnly: true },
     },
     {
       name: "content",
       type: "textarea",
       label: "Comentário",
       maxLength: 2048,
-      admin: { description: "Limite de caracteres: 2048." },
+      admin: { description: "Limite de caracteres: 2048.", readOnly: true },
       required: true,
     },
     {
@@ -31,18 +32,21 @@ export const Comments: CollectionConfig = {
       label: "Publicação",
       relationTo: "posts",
       required: true,
+      admin: { readOnly: true },
     },
     {
       name: "isApproved",
       type: "checkbox",
       label: "Aprovar comentário",
       defaultValue: false,
+      admin: { readOnly: true },
     },
     {
       name: "acceptsEmail",
       type: "checkbox",
       label: "Usuário quer receber newsletter?",
       defaultValue: true,
+      admin: { readOnly: true },
     },
   ],
   hooks: {

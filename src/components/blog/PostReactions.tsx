@@ -6,7 +6,7 @@ import { reactions } from "@/lib/reactions";
 import { Post, PostReaction } from "@/payload-types";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
-import { SmilePlus } from "lucide-react";
+import { Loader2Icon, LoaderIcon, SmilePlus } from "lucide-react";
 import {
   Popover,
   PopoverContent,
@@ -79,7 +79,6 @@ export default function PostReactions({ post }: PostReactionsProps) {
         loading && "pointer-events-none animate-pulse",
       )}
     >
-      {/* {JSON.stringify(postReactions)} */}
       {reactions.filter((r) => (postReactions as any)[r.name] > 0).length >
       0 ? (
         <div className="flex items-center gap-1">
@@ -144,6 +143,7 @@ export default function PostReactions({ post }: PostReactionsProps) {
           </div>
         </PopoverContent>
       </Popover>
+      {loading && <Loader2Icon className="size-4 animate-spin duration-2000" />}
     </div>
   );
 }

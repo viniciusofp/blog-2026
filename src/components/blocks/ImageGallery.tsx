@@ -20,7 +20,7 @@ const ImageGallery: React.FC<{
   if (!images || !images[0].url) return null;
   return (
     <>
-      <Carousel opts={{ align: "start" }}>
+      <Carousel opts={{ align: "start" }} className="mg-4 lg:mb-8">
         <div className="overflow-hidden rounded-xs">
           <CarouselContent className="not-prose -ml-2 rounded-xs">
             {node.fields.images.map((image: Media) => (

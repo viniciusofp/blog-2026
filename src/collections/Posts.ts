@@ -3,15 +3,41 @@ import {
   FixedToolbarFeature,
   lexicalEditor,
 } from "@payloadcms/richtext-lexical";
-import { SerializedEditorState } from "@payloadcms/richtext-lexical/lexical";
+import {
+  LexicalNode,
+  SerializedEditorState,
+  SerializedLexicalNode,
+} from "@payloadcms/richtext-lexical/lexical";
 import { convertLexicalToPlaintext } from "@payloadcms/richtext-lexical/plaintext";
 import type { CollectionConfig, Field } from "payload";
 import slugify from "slugify";
 import urlField from "./fields/url-field";
 import { reactions } from "@/lib/reactions";
 
+function trimRichTextContent(value: any) {
+  if (
+    value.root?.children?.length > 1 &&
+    value.root?.children[value.root?.children?.length - 1] &&
+    value.root?.children[value.root?.children?.length - 1].type ===
+      "paragraph" &&
+    value.root?.children[value.root?.children?.length - 1].children?.length ===
+      0
+  ) {
+    var trimmedChildren = [...value.root?.children];
+    trimmedChildren.pop();
+    return trimRichTextContent({
+      ...value,
+      root: { ...value.root, children: trimmedChildren },
+    });
+  } else {
+    return value;
+  }
+}
+
 export const Posts: CollectionConfig = {
   slug: "posts",
+  defaultPopulate: { comments: true, slug: true },
+  labels: { singular: "Post", plural: "Posts" },
   admin: {
     useAsTitle: "content",
     components: {
@@ -26,8 +52,6 @@ export const Posts: CollectionConfig = {
         `${req.protocol}//${req.host}/${data.slug}?preview=true`,
     },
   },
-  defaultPopulate: { comments: true, slug: true },
-  labels: { singular: "Post", plural: "Posts" },
   versions: {
     drafts: {
       autosave: {
@@ -36,6 +60,7 @@ export const Posts: CollectionConfig = {
     },
     maxPerDoc: 10,
   },
+
   fields: [
     {
       name: "title",
@@ -93,7 +118,6 @@ export const Posts: CollectionConfig = {
           }),
         ],
       }),
-
       validate: (value, { siblingData }) => {
         const plaintext = convertLexicalToPlaintext({
           data: value as SerializedEditorState,
@@ -105,6 +129,14 @@ export const Posts: CollectionConfig = {
           return `Textos com mais de 512 caracteres precisam de um título, seu texto está com ${plaintext.length} caracteres.`;
         }
         return true;
+      },
+      hooks: {
+        beforeValidate: [
+          ({ value }) => {
+            // return value;
+            return trimRichTextContent(value);
+          },
+        ],
       },
     },
     {

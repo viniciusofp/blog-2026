@@ -75,9 +75,9 @@ const CustomUploadComponent: React.FC<{
         alt={uploadDoc.alt}
         height={uploadDoc.height}
         src={
-          uploadDoc?.sizes?.half?.url
-            ? uploadDoc?.sizes?.half?.url
-            : uploadDoc.url
+          uploadDoc?.sizes?.half?.url ||
+          uploadDoc?.sizes?.third?.url ||
+          uploadDoc.url
         }
         width={uploadDoc.width}
         className="rounded-xs"

@@ -5,9 +5,12 @@ import { buildConfig } from "payload";
 import { fileURLToPath } from "url";
 
 import { s3Storage } from "@payloadcms/storage-s3";
+import { resendAdapter } from "@payloadcms/email-resend";
 
 import { en } from "@payloadcms/translations/languages/en";
 import { pt } from "@payloadcms/translations/languages/pt";
+
+import sharp from "sharp";
 
 import { Comments } from "./collections/Comments";
 import { Posts } from "./collections/Posts";
@@ -18,7 +21,6 @@ import { BlogInfo } from "./collections/BlogInfo";
 import { Subscribers } from "./collections/Subscribers";
 import { PostReactions } from "./collections/PostReactions";
 import { Media } from "./collections/Media";
-import sharp from "sharp";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -110,4 +112,9 @@ export default buildConfig({
     fallbackLanguage: "pt", // default
     supportedLanguages: { en, pt },
   },
+  email: resendAdapter({
+    defaultFromAddress: "contato@viniciusofp.com.br",
+    defaultFromName: "Vinícius Pereira - viniciusofp",
+    apiKey: process.env.RESEND_API_KEY || "",
+  }),
 });
