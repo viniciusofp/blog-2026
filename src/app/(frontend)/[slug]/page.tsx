@@ -143,7 +143,7 @@ export default async function BlogPost({
                 month: "long",
                 year: "numeric",
               })} - ${createdAt.toLocaleTimeString("pt-BR", {
-                hour: "2-digit",
+                hour: "numeric",
                 minute: "2-digit",
               })}`}
         </p>
