@@ -8,10 +8,10 @@ import "./styles.css";
 import { WebVitals } from "@/components/WebVitals";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 
-export const metadata = {
-  description: "A blank template using Payload in a Next.js app.",
-  title: "Payload Blank Template",
-};
+// export const metadata = {
+//   description: "A blank template using Payload in a Next.js app.",
+//   title: "Payload Blank Template",
+// };
 
 const hanken = Hanken_Grotesk({
   subsets: ["latin"],
@@ -32,7 +32,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
     <html lang="en" className={`${hanken.variable} ${cormorant.variable}`}>
       <body className="font-sans">
         <TooltipProvider>
-          <main className="mx-auto my-8 max-w-xl px-6 lg:max-w-2xl">
+          <main className="mx-auto my-8 max-w-xl px-6 lg:max-w-3xl">
             <BlogHeader />
             {children}
             <SubscribeFooter />
