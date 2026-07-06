@@ -39,7 +39,6 @@ export const Comments: CollectionConfig = {
       type: "checkbox",
       label: "Aprovar comentário",
       defaultValue: false,
-      admin: { readOnly: true },
     },
     {
       name: "acceptsEmail",
