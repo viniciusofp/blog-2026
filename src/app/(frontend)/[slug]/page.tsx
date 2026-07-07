@@ -143,7 +143,7 @@ export default async function BlogPost({
                 month: "long",
                 year: "numeric",
               })} - ${createdAt.toLocaleTimeString("pt-BR", {
-                hour: "numeric",
+                hour: "2-digit",
                 minute: "2-digit",
               })}`}
         </p>
@@ -177,7 +177,7 @@ export default async function BlogPost({
       <div className="">
         <CustomRichText
           data={post.content}
-          className="prose-headings:font-bold prose-h1:text-4xl prose-h2:text-3xl prose-h3:text-2xl prose-h4:text-xl lg:prose-h1:text-5xl lg:prose-h2:text-4xl lg:prose-h3:text-3xl lg:prose-h4:text-2xl prose prose-lg lg:prose-2xl prose-a:underline prose-a:decoration-[#FFF7B1] prose-a:[text-decoration-skip-ink:none] prose-a:underline-offset-[-0.25em] prose-a:hover:underline prose-a:decoration-[0.5em] prose-a:hover:decoration-[#FFEE50] text-pretty selection:text-[#FFF7B1]"
+          className="prose-headings:font-bold prose-h1:text-4xl prose-h2:text-3xl prose-h3:text-2xl prose-h4:text-xl lg:prose-h1:text-5xl lg:prose-h2:text-4xl lg:prose-h3:text-3xl lg:prose-h4:text-2xl prose prose-lg lg:prose-2xl prose-a:underline prose-a:decoration-[#FFF7B1] prose-a:[text-decoration-skip-ink:none] prose-a:underline-offset-[-0.25em] prose-a:hover:underline prose-a:decoration-[0.5em] prose-a:hover:decoration-[#FFEE50] text-pretty selection:underline selection:decoration-orange-600/20"
         />
       </div>
       {post.updatedAt !== post.createdAt ? (
