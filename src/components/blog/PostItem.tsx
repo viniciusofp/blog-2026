@@ -53,13 +53,13 @@ export default function PostItem({ doc }: PostItemProps) {
             <Link
               href={permalink}
               title="Permalink"
-              className="mt-4 flex items-center gap-1 font-medium tracking-wide text-orange-800 opacity-80 duration-200 hover:gap-2 hover:underline hover:opacity-100 lg:mt-6"
+              className="mt-4 flex items-center gap-1 font-medium tracking-wide text-red-600 opacity-80 duration-200 hover:gap-2 hover:underline hover:opacity-100 lg:mt-6"
             >
               Leia mais <ArrowRight className="size-4" />
             </Link>
           </div>
         ) : (
-          <div className="prose prose-stone prose-xl lg:prose-2xl prose-a:text-orange-800/80 prose-a:hover:text-orange-800 prose-a:decoration-orange-800 prose-a:hover:underline prose-a:decoration-1 prose-a:underline-offset-2 prose-a:hover:decoration-2 text-pretty">
+          <div className="prose prose-stone prose-xl lg:prose-2xl prose-a:text-red-600/80 prose-a:hover:text-red-600 prose-a:decoration-red-600 prose-a:hover:underline prose-a:decoration-1 prose-a:underline-offset-2 prose-a:hover:decoration-2 text-pretty">
             <CustomRichText data={doc.content as SerializedEditorState} />
           </div>
         )}
@@ -79,7 +79,7 @@ export default function PostItem({ doc }: PostItemProps) {
                           : ", "
                         : null}
                       <Link
-                        className="text-orange-800 hover:underline"
+                        className="text-red-600 hover:underline"
                         href={`/categoria/${cat.slug}`}
                       >
                         {cat.name}

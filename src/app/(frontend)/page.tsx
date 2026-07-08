@@ -65,7 +65,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
           {prevPage ? (
             <Link
               href={`/?page=${prevPage}`}
-              className="flex items-center justify-start gap-1 text-orange-800 opacity-80 duration-200 hover:opacity-100"
+              className="flex items-center justify-start gap-1 text-red-600 opacity-80 duration-200 hover:opacity-100"
             >
               <ArrowLeft className="size-4" />
               Mais novos
@@ -79,7 +79,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
           {nextPage ? (
             <Link
               href={`/?page=${nextPage}`}
-              className="flex items-center justify-end gap-1 text-orange-800 opacity-80 duration-200 hover:opacity-100"
+              className="flex items-center justify-end gap-1 text-red-600 opacity-80 duration-200 hover:opacity-100"
             >
               Mais antigos <ArrowRight className="size-4" />
             </Link>

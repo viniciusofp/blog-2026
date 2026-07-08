@@ -74,7 +74,7 @@ export default async function TagPage({ searchParams, params }: TagPageProps) {
   return (
     <>
       <div className="mt-4 flex w-max max-w-full items-center gap-1 rounded border border-stone-200 bg-stone-100 px-3 py-1 text-xs font-medium tracking-wide [&_svg]:size-3 [&_svg]:text-stone-400">
-        <Link href="/blog" className="text-orange-800 hover:underline">
+        <Link href="/blog" className="text-red-600 hover:underline">
           Blog
         </Link>
         <ChevronRight style={{ width: "16px", height: "16px" }} />
@@ -90,7 +90,7 @@ export default async function TagPage({ searchParams, params }: TagPageProps) {
           {prevPage ? (
             <Link
               href={`/blog?page=${prevPage}`}
-              className="flex items-center justify-start gap-1 text-orange-800 opacity-80 duration-200 hover:opacity-100"
+              className="flex items-center justify-start gap-1 text-red-600 opacity-80 duration-200 hover:opacity-100"
             >
               <ArrowLeft className="size-4" />
               Mais novos
@@ -104,7 +104,7 @@ export default async function TagPage({ searchParams, params }: TagPageProps) {
           {nextPage ? (
             <Link
               href={`/blog?page=${nextPage}`}
-              className="flex items-center justify-end gap-1 text-orange-800 opacity-80 duration-200 hover:opacity-100"
+              className="flex items-center justify-end gap-1 text-red-600 opacity-80 duration-200 hover:opacity-100"
             >
               Mais antigos <ArrowRight className="size-4" />
             </Link>

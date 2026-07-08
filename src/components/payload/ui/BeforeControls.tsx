@@ -7,7 +7,7 @@ import { ExternalLink, EyeIcon } from "lucide-react";
 import type { BeforeDocumentControlsClientProps } from "payload";
 
 const buttonClasses =
-  "flex h-9 items-center gap-2 rounded bg-orange-100 px-3 text-xs font-medium tracking-wider text-orange-800 uppercase no-underline duration-75 hover:bg-orange-800 hover:text-white";
+  "flex h-9 items-center gap-2 rounded bg-red-100 px-3 text-xs font-medium tracking-wider text-red-600 uppercase no-underline duration-75 hover:bg-red-600 hover:text-white";
 
 export function VisitContent(props: BeforeDocumentControlsClientProps) {
   const { value: slug } = useField({ path: "slug" });

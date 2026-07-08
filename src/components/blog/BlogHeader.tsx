@@ -2,7 +2,8 @@ import Link from "next/link";
 import { getPayload } from "payload";
 import config from "@/payload.config";
 import { CustomRichText } from "@/components/CustomRichText";
-import me from "@/public/me.jpg";
+import logo from "@/public/logo.svg";
+import Image from "next/image";
 
 export type BlogHeaderProps = {};
 
@@ -13,19 +14,10 @@ export default async function BlogHeader(props: BlogHeaderProps) {
 
   return (
     <div className="mb-8 flex items-center gap-4">
-      <div className="size-14 shrink-0 overflow-hidden rounded-full border-2 border-white">
-        <img
-          src={me.src}
-          alt=""
-          className="h-full w-full object-cover object-center"
-        />
-      </div>
       <div className="">
-        <Link href="/">
-          <h1 className="font-bold text-stone-800">{blogInfo.name}</h1>
-        </Link>
+        <img src={logo.src} alt={blogInfo.name} className="mb-2 h-6" />
         <CustomRichText
-          className="text-xs font-light text-balance text-stone-600"
+          className="max-w-lg text-xs leading-snug text-balance text-stone-600 [&_a]:underline"
           data={blogInfo.description}
         />
       </div>
