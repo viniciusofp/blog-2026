@@ -73,7 +73,7 @@ export default async function TagPage({ searchParams, params }: TagPageProps) {
   const tag = docs[0].tags?.filter((t) => (t as Tag).slug === slug)[0];
   return (
     <>
-      <div className="mt-4 flex w-max max-w-full items-center gap-1 rounded border border-stone-200 bg-stone-100 px-3 py-1 text-xs font-medium tracking-wide [&_svg]:size-3 [&_svg]:text-stone-400">
+      <div className="mx-auto mt-4 flex w-max max-w-full items-center gap-1 rounded border border-stone-200 bg-stone-100 px-3 py-1 text-xs font-medium tracking-wide [&_svg]:size-3 [&_svg]:text-stone-400">
         <Link href="/blog" className="text-red-600 hover:underline">
           Blog
         </Link>

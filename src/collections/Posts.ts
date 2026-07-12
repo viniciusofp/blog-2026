@@ -133,8 +133,7 @@ export const Posts: CollectionConfig = {
       hooks: {
         beforeValidate: [
           ({ value }) => {
-            // return value;
-            return trimRichTextContent(value);
+            return value ? trimRichTextContent(value) : undefined;
           },
         ],
       },

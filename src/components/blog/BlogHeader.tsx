@@ -13,14 +13,19 @@ export default async function BlogHeader(props: BlogHeaderProps) {
   const blogInfo = await payload.findGlobal({ slug: "blogInfo" });
 
   return (
-    <div className="mb-8 flex items-center gap-4">
-      <div className="">
-        <img src={logo.src} alt={blogInfo.name} className="mb-2 h-6" />
-        <CustomRichText
-          className="max-w-lg text-xs leading-snug text-balance text-stone-600 [&_a]:underline"
-          data={blogInfo.description}
-        />
-      </div>
+    <div className="mb-8 grid items-center justify-center">
+      <Link href="/" className="relative mx-auto mb-3 h-8 w-fit">
+        <div className="relative z-4 flex h-full w-fit items-center justify-center rounded-t-lg border-2 border-stone-900 bg-white px-3 text-sm leading-0 font-medium tracking-widest">
+          {blogInfo.name}
+        </div>
+        <div className="absolute top-0 left-3 z-3 h-full w-full rounded-t-lg border-2 border-stone-900 bg-green-100"></div>
+        <div className="absolute top-0 left-6 z-2 h-full w-full rounded-t-lg border-2 border-stone-900 bg-yellow-200"></div>
+        <div className="absolute top-0 left-9 z-1 h-full w-full rounded-t-lg border-2 border-stone-900 bg-red-400"></div>
+      </Link>
+      <CustomRichText
+        className="max-w-lg text-center text-xs leading-snug text-balance text-stone-600 [&_a]:underline"
+        data={blogInfo.description}
+      />
     </div>
   );
 }

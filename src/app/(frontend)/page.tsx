@@ -55,7 +55,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
 
   return (
     <>
-      <div className="flex flex-col divide-y divide-stone-200">
+      <div className="flex flex-col divide-y divide-stone-100">
         {docs.map((doc) => {
           return <PostItem key={doc.id} doc={doc as Post} />;
         })}
