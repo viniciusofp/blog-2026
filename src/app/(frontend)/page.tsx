@@ -8,6 +8,7 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { Post } from "@/payload-types";
 import { Metadata } from "next";
+import { convertLexicalToPlaintext } from "@payloadcms/richtext-lexical/plaintext";
 
 export type BlogPageProps = {
   searchParams: Promise<{ page: string; preview: string }>;
@@ -17,10 +18,12 @@ export async function generateMetadata(): Promise<Metadata> {
   const payloadConfig = await config;
   const payload = await getPayload({ config: payloadConfig });
   const blogInfo = await payload.findGlobal({ slug: "blogInfo" });
-
+  const description = convertLexicalToPlaintext({
+    data: blogInfo.description as any,
+  });
   return {
     title: `${blogInfo.name}`,
-    description: `${blogInfo.description}`,
+    description: `${description}`,
   };
 }
 export default async function BlogPage({ searchParams }: BlogPageProps) {
