@@ -38,6 +38,8 @@ export const Posts: CollectionConfig = {
   slug: "posts",
   defaultPopulate: { comments: true, slug: true },
   labels: { singular: "Post", plural: "Posts" },
+  trash: true,
+  orderable: true,
   admin: {
     useAsTitle: "content",
     components: {
